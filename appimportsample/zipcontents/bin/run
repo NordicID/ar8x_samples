@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = "start" ]; then
+	# Signal start to your process(es)
+	mono ~/ThirdPartyAppPing.exe
+else
+	# Signal stop to your process(es)
+	echo "EXIT"
+fi

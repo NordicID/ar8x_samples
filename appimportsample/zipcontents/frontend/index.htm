@@ -1,0 +1,28 @@
+<!--#include file="$ar8xroot/app_header.htm" -->
+<body>
+<h2>appexample manager</h2>
+<div id="pongDiv"></div>
+<script type="text/javascript">
+function Ping()
+{
+	var fullurl = 'https://' + location.host + '/app/backend/appexample/Ping';
+    $.ajax({
+		url: fullurl,
+		type: "GET",
+		cache: false,
+		processData: false, // Don't process the files
+		success: function (data) {
+			$("#pongDiv").append(data + "</br>");
+		},
+		error: function (data) {
+			$("#pongDiv").append("backend service connection error " + data + "</br>");    
+		}
+	});
+}
+Ping();
+</script>
+<input type="button" class="btn btn-primary" onclick="Ping()" value="Ping"/>
+</body>
+
+<!--#include file="$ar8xroot/app_footer.htm" -->
+

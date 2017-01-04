@@ -1,0 +1,279 @@
+<!--#include file="$ar8xroot/app_header.htm" -->
+<body>
+<h2>LLRP Configuration</h2>
+<script type="text/javascript" src="<!--#echo var="ar8xroot" -->/property.js"></script>
+<div id="pongDiv"></div>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home" onclick="GetStatus();">Status</a></li>
+    <li><a data-toggle="tab" href="#config" onclick="GetDevices();">Config</a></li>
+	<li><a data-toggle="tab" href="#log" onclick="GetLog();">Log</a></li>
+  </ul>
+  <div id="loaderDiv"></br></div>
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>Status</h3>
+      <div id="statusDiv"></div>
+    </div>
+    <div id="config" class="tab-pane fade">
+      <h3>Config</h3>
+      <div id="devDiv"></div>
+	  <div id="resDiv"></div>
+	  <input type="button" class="btn btn-primary" onclick="SetDevices()" value="Save"/>
+	<input type="button" class="btn btn-primary" onclick="AddDevice()" value="Add new reader"/>
+	<input type="button" class="btn btn-primary" onclick="GetDevices()" value="Reload"/>
+    </div>
+    <div id="log" class="tab-pane fade">
+      <h3>Log</h3>
+	  <textarea id="normalogDiv" rows="20" style="width:99%" spellcheck="false">
+</textarea>
+      <p></p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p></p>
+    </div>
+  </div>
+  
+
+<script type="text/javascript">
+
+var devCount = 0;
+
+function SetDevices()
+{
+	$("#resDiv").empty();
+	var set = GetSettingElements("devDiv");
+	var Devices = [];
+	var reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1};
+	var readerEnum = -1;
+	//data[x].Reader.ReaderAddress
+	for(var i = 0; i < set.length; i++)
+	{
+		var res = set[i].name.split("_");
+		readerEnum = res[1];
+		for(i = i;i < set.length && 5;i++)
+		{
+			res = set[i].name.split("_");
+			if(res[1] != readerEnum)
+			{
+				i--;
+				break;
+			}
+			
+			if(res[0].startsWith("Active"))
+			{
+				reader.Active = set[i].value;
+			}
+			else if(res[0].startsWith("ReaderAddress"))
+			{
+				reader.ReaderAddress = set[i].value;
+			}
+			else if(res[0].startsWith("UseTLS"))
+			{
+				reader.UseTLS = set[i].value;
+			}
+			else if(res[0].startsWith("ClientPort"))
+			{
+				reader.ClientPort = set[i].value;
+				if(isNaN(reader.ClientPort) || parseInt(reader.ClientPort) <= 0) {
+					$("#resDiv").append("Client port is not valid numeric value");
+						return;
+					}
+			}
+			else if(res[0].startsWith("ReaderPort"))
+			{
+				reader.ReaderPort = set[i].value;
+				if(isNaN(reader.ReaderPort)) {
+					delete reader.ReaderPort;
+				}
+				else if(parseInt(reader.ReaderPort) <= 0)
+				{
+					delete reader.ReaderPort;
+				}
+			}
+		}
+		
+		Devices.push({Reader: reader});
+		reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1};
+	}
+	var fullurl = 'https://' + location.host + '/app/backend/norma/SetDevices';
+	var jsoni = JSON.stringify(Devices);
+	$.ajax({
+            url: fullurl,
+            type: 'POST',
+            cache: false,
+			data: jsoni,
+			contentType: "application/json",
+            processData: false, // Don't process the files
+            success: function (data) {
+				
+                if(data === false) 
+				{
+					$("#resDiv").append("Saving settings failed");
+				}
+				else
+				{
+					$("#resDiv").append("Settings saved");
+				}
+            },
+            error: function (data) {
+				$("#resDiv").empty();
+				$("#resDiv").append("Saving settings failed");             
+            },
+        });
+}
+
+function RemoveReader(x)
+{
+	document.getElementById("readerDiv" + x).remove();
+}
+
+function AddDevice()
+{
+	$("#devDiv").append("<div id='readerDiv"+devCount+"'>");
+	var divi = "readerDiv"+devCount;
+	$("#"+divi).append("Reader" + (devCount+1) + "</br>");
+	var ntpEl = {Name: "ReaderAddress_" + devCount + "_property", Title: "Address", Type: "Text", Id: "ReaderAddress" + devCount + "_property", Label: "", Validation: 0, Value: "" };
+	AddNewSettingElement(ntpEl,divi);
+	ntpEl = {Name: "ClientPort_" + devCount + "_property", Title: "ClientPort ", Type: "Text", Id: "ClientPort" + devCount + "_property", Label: "", Validation: 0, Value: "" };
+	AddNewSettingElement(ntpEl,divi);
+	ntpEl = {Name: "ReaderPort_" + devCount + "_property", Title: "ReaderPort ", Type: "Text", Id: "ReaderPort" + devCount + "_property", Label: "", Validation: 0, Value: "" };
+	AddNewSettingElement(ntpEl,divi);
+	var check = {Name: "Active_"+devCount+"_check_property", Id: "Active"+devCount+"_check_property", Title: "Active", Type: "Check", Value: false , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
+	AddNewSettingElement(check,divi);
+	check = {Name: "UseTLS_"+devCount+"_check_property", Id: "UseTLS"+devCount+"_check_property", Title: "UseTLS", Type: "Check", Value: "" , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
+	AddNewSettingElement(check,divi);
+	var btn = {Name: "RemoveButton_" + devCount, Title: "", Type: "submit", Id: "RemoveButton" + devCount, Label: "", Validation: 0, Value: "Remove", Options: "", OnClick: "RemoveReader("+devCount+");", Class: "btn btn-primary" };
+	AddNewSettingElement(btn,divi);
+	$("#"+divi).append("</div></br></br>");
+	devCount++;
+}
+
+function GetStatus()
+{
+	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#statusDiv").empty();
+	var fullurl = 'https://' + location.host + '/app/backend/norma/GetDeviceStatusAll';
+	$.ajax({
+		url: fullurl,
+		type: "GET",
+		cache: false,
+		processData: false, // Don't process the files
+		success: function (data) 
+		{
+			if(data != undefined && data != null)
+			{
+				$("#statusDiv").append("Last update: " + data.LastUpdate + "</br></br>");
+				for(var i=0;i<data.Instances.ReaderStatus.length;i++)
+				{
+					var readerConn = data.Instances.ReaderStatus[i].Status.ReaderConnection;
+					var clientConn = data.Instances.ReaderStatus[i].Status.ClientConnection;
+					var readerErr = data.Instances.ReaderStatus[i].Status.ReaderLastError;
+					var llrpErr = data.Instances.ReaderStatus[i].Status.LastLLRPError;
+					if(readerConn == "Connected")
+						readerConn = readerConn.fontcolor("#00CC00");
+					else
+						readerConn = readerConn.fontcolor("#CCCC00");
+					
+					if(clientConn.startsWith("Client "))
+						clientConn = clientConn.fontcolor("#00CC00");
+					else
+						clientConn = clientConn.fontcolor("#CCCC00");
+						
+					if(readerErr != "No errors")
+						readerErr = readerErr.fontcolor("#CC0000");
+
+					if(llrpErr != "No errors")
+						llrpErr = llrpErr.fontcolor("#CC0000");
+						
+					$("#statusDiv").append("<b>Instance name: " + data.Instances.ReaderStatus[i].InstanceName + "</b></br>");
+					$("#statusDiv").append("Reader active: " + data.Instances.ReaderStatus[i].Status.Active + "</br>");
+					$("#statusDiv").append("Client connection status: " + clientConn + "</br>");
+					$("#statusDiv").append("Reader connection status: " + readerConn + "</br>");
+					$("#statusDiv").append("Last reader error: " + readerErr + "</br>");
+					$("#statusDiv").append("Last LLRP error: " + llrpErr + "</br></br></br>");
+				}
+			}
+			$("#loaderDiv").html("</br>");
+		},
+		error: function (data) 
+		{
+			$("#loaderDiv").html("</br>");
+			$("#statusDiv").append("Error getting data "+data+"</br>");
+		}
+	});
+}
+
+function GetDevices()
+{
+	$("#resDiv").empty();
+	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#devDiv").empty();
+	var fullurl = 'https://' + location.host + '/app/backend/norma/GetDevices';
+	$.ajax({
+		url: fullurl,
+		type: "GET",
+		cache: false,
+		processData: false, // Don't process the files
+		success: function (data) {
+			$("#loaderDiv").html("</br>");
+		
+			for(var x=0;x<data.length;x++)
+			{	
+				$("#devDiv").append("<div id='readerDiv"+x+"'>");
+				var divi = "readerDiv"+x;
+				$("#"+divi).append("Reader" + (x+1) + "</br>");
+				var ntpEl = {Name: "ReaderAddress_" + x + "_property", Title: "Address " + x, Type: "Text", Id: "ReaderAddress" + x + "_property", Label: "", Validation: 0, Value: data[x].Reader.ReaderAddress };
+				AddNewSettingElement(ntpEl,divi);
+				ntpEl = {Name: "ClientPort_" + x + "_property", Title: "ClientPort " + x, Type: "Text", Id: "ClientPort" + x + "_property", Label: "", Validation: 0, Value: data[x].Reader.ClientPort };
+				AddNewSettingElement(ntpEl,divi);
+				ntpEl = {Name: "ReaderPort_" + x + "_property", Title: "ReaderPort " + x, Type: "Text", Id: "ReaderPort" + x + "_property", Label: "", Validation: 0, Value: data[x].Reader.ReaderPort };
+				AddNewSettingElement(ntpEl,divi);
+				var check = {Name: "Active_"+x+"_check_property", Id: "Active"+x+"_check_property", Title: "Active", Type: "Check", Value: data[x].Reader.Active , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
+				AddNewSettingElement(check,divi);
+				check = {Name: "UseTLS_"+x+"_check_property", Id: "UseTLS"+x+"_check_property", Title: "UseTLS", Type: "Check", Value: data[x].Reader.UseTLS , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
+				AddNewSettingElement(check,divi);
+				var btn = {Name: "RemoveButton_" + x, Title: "", Type: "submit", Id: "RemoveButton" + x, Label: "", Validation: 0, Value: "Remove", Options: "", OnClick: "RemoveReader("+x+");", Class: "btn btn-primary" };
+				AddNewSettingElement(btn,divi);
+				$("#"+divi).append("</div></br></br>");
+				devCount++;
+			}	
+			
+		},
+		error: function (data) {
+			$("#loaderDiv").html("</br>");
+			$("#devDiv").append("Error getting data "+data+"</br>");
+		}
+	});
+}
+
+function GetLog()
+{
+	$("#normalogDiv").val('');
+	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	var fullurl = 'https://' + location.host + '/app/backend/norma/GetLog';
+	$.ajax({
+		url: fullurl,
+		type: "GET",
+		cache: false,
+		processData: false, // Don't process the files
+		success: function (data) {
+			$("#loaderDiv").html("</br>");
+			$("#normalogDiv").val(data);
+		},
+		error: function (data) {
+			$("#loaderDiv").html("</br>");
+			$("#normalogDiv").val(data);
+		}
+	});
+}
+
+GetStatus();
+GetDevices();
+GetLog();
+</script>
+
+</body>
+
+<!--#include file="$ar8xroot/app_footer.htm" -->
+

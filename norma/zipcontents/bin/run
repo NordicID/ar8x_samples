@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ "$1" = "start" ]; then
+	# Signal start to your process(es)
+	echo "Starting NormaConfig"
+	mono ~/NormaConfig.exe &
+	echo "Starting Norma"
+	~/NormaRpi
+else
+	# Signal stop to your process(es)
+	echo "EXIT"
+fi
