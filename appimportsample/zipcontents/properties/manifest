@@ -1,3 +1,4 @@
-ar8x_application
-appexample
-1.0.0
+header=ar8x_application
+name=appexample
+version=1.0.0
+autostart=false
