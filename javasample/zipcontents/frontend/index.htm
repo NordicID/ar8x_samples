@@ -50,7 +50,7 @@
         // Connection succeeded; subscribe to our topic
         mqtt.subscribe("javasample/events", {qos: 0});
 		mqtt.subscribe("javasample/tags", {qos: 0});
-        $('#topic').append("javasample/events & javasample/tags");
+        $('#topic').val("javasample/events & javasample/tags");
     }
 
     function onConnectionLost(response) {

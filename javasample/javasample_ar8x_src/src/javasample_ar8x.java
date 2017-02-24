@@ -33,7 +33,6 @@ public class javasample_ar8x {
 	private static MqttMessage  message = new MqttMessage();
 	private static String topicev        = "javasample/events";
 	private static String topictags       = "javasample/tags";
-	private static int qos             = 2;
 	private static String broker = "tcp://127.0.0.1:1883";
 	private static String clientId     = "JavaSample";
 	
@@ -161,19 +160,24 @@ public class javasample_ar8x {
 						// We receive connected event when NurApi transport is connected
 						publishMessage("connectedEvent()", topicev);
 						try {
+							mApi.clearIdBuffer();
+							
 							NurRespInventory resp = mApi.inventory();
 							
 							System.out.println("Inventory found " + resp.numTagsFound + " tags");
 							publishMessage("Inventory found " + resp.numTagsFound + " tags", topicev);
 							
-							mApi.fetchTags();
-							
-							NurTagStorage tagStorage = mApi.getStorage();
-							
-							for (int i = 0; i < tagStorage.size(); i++) {
+							if(resp.numTagsFound > 0)
+							{
+								mApi.fetchTags();
 								
-								NurTag tag = tagStorage.get(i);		
-								publishMessage(tag.getEpcString(), topictags);
+								NurTagStorage tagStorage = mApi.getStorage();
+								
+								for (int i = 0; i < tagStorage.size(); i++) {
+									
+									NurTag tag = tagStorage.get(i);		
+									publishMessage(tag.getEpcString(), topictags);
+								}
 							}
 						} catch (Exception e) { 
 							e.printStackTrace();
