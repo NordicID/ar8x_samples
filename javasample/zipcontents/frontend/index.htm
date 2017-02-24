@@ -29,7 +29,7 @@
             cleanSession: cleansession,
             onSuccess: onConnect,
             onFailure: function (message) {
-                $('#events').val("Connection failed: " + message.errorMessage + "Retrying");
+                $('#events').append("Connection failed: " + message.errorMessage + "Retrying");
                 setTimeout(MQTTconnect, reconnectTimeout);
             }
         };
@@ -46,16 +46,16 @@
     }
 
     function onConnect() {
-        $('#events').val('Connected to ' + host + ':' + port + path);
+        $('#events').append('Connected to ' + host + ':' + port + path);
         // Connection succeeded; subscribe to our topic
         mqtt.subscribe("javasample/events", {qos: 0});
 		mqtt.subscribe("javasample/tags", {qos: 0});
-        $('#topic').val("javasample/events & javasample/tags");
+        $('#topic').append("javasample/events & javasample/tags");
     }
 
     function onConnectionLost(response) {
         setTimeout(MQTTconnect, reconnectTimeout);
-        $('#events').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
+        $('#events').append("connection lost: " + responseObject.errorMessage + ". Reconnecting");
 
     };
 
