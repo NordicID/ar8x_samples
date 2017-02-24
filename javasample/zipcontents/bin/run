@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = "start" ]; then
+        # Signal start to your process(es)
+        ~/java/bin/java -Djava.library.path=../lib -cp ../lib/NurApi.jar:../lib/NurApiSerialTransportLinux.jar:../lib/org.eclipse.paho.client.mqttv3-1.1.0.jar:. javasample_ar8x
+else
+        # Signal stop to your process(es)
+        echo "EXIT"
+fi

@@ -1,0 +1,4 @@
+header=ar8x_application
+name=javasample
+version=1.0.0
+autostart=false

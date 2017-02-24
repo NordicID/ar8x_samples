@@ -1,0 +1,50 @@
+<!--#include file="$ar8xroot/app_header.htm" -->
+<body>
+<h2>Netdata</h2>
+This application contains netdata, which can be used for monitoring the health of your AR8x platform.
+On this view you can perform a simple request for the Netdata to return the latest CPU usage percent. 
+You can also open the UI of netdata from this view.
+</br></br>
+If you wish to configure the netdata, you need to edit the netdata.conf located in netdata\zipcontents\bin\netdata\etc\netdata.
+<div id="loaderDiv"></br></div>
+<div id="infoDiv"></br></div>
+<script type="text/javascript">
+
+function GetCPUStats()
+{
+	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	var fullurl = "https://"+location.host+"/app/backend/healthcheck/api/v1/data?chart=system.cpu&format=array&points=1&group=average&options=absolute|jsonwrap|nonzero&after=-1";
+	$.ajax({
+		url: fullurl,
+		type: "GET",
+		cache: false,
+		processData: false, // Don't process the files
+		success: function (data) 
+		{
+			if(data != undefined && data != null)
+			{
+				$("#infoDiv").html("Current CPU usage from netdata: "+data.result[0]+"%");
+			}
+			$("#loaderDiv").html("</br>");
+		},
+		error: function (data) 
+		{
+			$("#loaderDiv").html("</br>");
+			$("#infoDiv").append("Error getting CPU usage from netdata: "+data+"</br>");
+		}
+	});
+}
+
+function OpenUI()
+{
+	var url = "https://"+location.host+"/app/backend/healthcheck";
+	var win = window.open(url, '_blank');
+	win.focus();
+}
+
+</script>
+<!-- here we will add charts -->
+<input type="button" class="btn btn-primary" onclick="OpenUI();" value="Open UI"/>
+<input type="button" class="btn btn-primary" onclick="GetCPUStats();" value="Test netdata"/>
+</body>
+<!--#include file="$ar8xroot/app_footer.htm" -->

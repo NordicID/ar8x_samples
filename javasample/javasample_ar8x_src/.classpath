@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/NASS_github/ar8x_samples/javasample/zipcontents/lib/NurApi.jar"/>
+	<classpathentry kind="lib" path="C:/NASS_github/ar8x_samples/javasample/zipcontents/lib/NurApiSerialTransportLinux.jar"/>
+	<classpathentry kind="lib" path="C:/NASS_github/ar8x_samples/javasample/zipcontents/lib/org.eclipse.paho.client.mqttv3-1.1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
