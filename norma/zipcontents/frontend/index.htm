@@ -1,7 +1,6 @@
-<!--#include file="$ar8xroot/app_header.htm" -->
+
 <body>
 <h2>LLRP Configuration</h2>
-<script type="text/javascript" src="<!--#echo var="ar8xroot" -->/property.js"></script>
 <div id="pongDiv"></div>
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home" onclick="GetStatus();">Status</a></li>
@@ -15,7 +14,21 @@
       <div id="statusDiv"></div>
     </div>
     <div id="config" class="tab-pane fade">
-      <h3>Config</h3>
+      <h3>Config</h3>	
+	  <table class="table table-hover table-expandable table-striped" id="devList">
+			<thead>
+				<tr>
+					<th>Reader address</th>
+					<th>Client port</th>
+					<th>Reader port</th>
+					<th>Active</th>
+					<th>Use TLS</th>
+					<th>Remove</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="devListBody"></tbody>
+		</table>
       <div id="devDiv"></div>
 	  <div id="resDiv"></div>
 	  <input type="button" class="btn btn-primary" onclick="SetDevices()" value="Save"/>
@@ -34,7 +47,7 @@
     </div>
   </div>
   
-
+<script src="../../js/helpers.js"></script>
 <script type="text/javascript">
 
 var devCount = 0;
@@ -42,55 +55,33 @@ var devCount = 0;
 function SetDevices()
 {
 	$("#resDiv").empty();
-	var set = GetSettingElements("devDiv");
+	//var set = GetSettingElements("devDiv");
 	var Devices = [];
 	var reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1};
 	var readerEnum = -1;
 	//data[x].Reader.ReaderAddress
-	for(var i = 0; i < set.length; i++)
+	for(var i = 0; i < devCount; i++)
 	{
-		var res = set[i].name.split("_");
-		readerEnum = res[1];
-		for(i = i;i < set.length && 5;i++)
+		
+		if(document.getElementById('readerAddress_' + i) == null || document.getElementById('readerAddress_' + i) == undefined)
+			continue;
+	
+		reader.ReaderAddress = document.getElementById('readerAddress_' + i).value;
+		reader.Active = document.getElementById('active_' + i).checked;
+		reader.UseTLS = document.getElementById('useTls_' + i).checked;
+		reader.ClientPort = document.getElementById('clientPort_' + i).value;
+		if(isNaN(reader.ClientPort) || parseInt(reader.ClientPort) <= 0) {
+		$("#resDiv").append("Client port is not valid numeric value");
+			return;
+		}
+					
+		reader.ReaderPort = document.getElementById('readerPort_' + i).value;
+		if(isNaN(reader.ReaderPort)) {
+			delete reader.ReaderPort;
+		}
+		else if(parseInt(reader.ReaderPort) <= 0)
 		{
-			res = set[i].name.split("_");
-			if(res[1] != readerEnum)
-			{
-				i--;
-				break;
-			}
-			
-			if(res[0].startsWith("Active"))
-			{
-				reader.Active = set[i].value;
-			}
-			else if(res[0].startsWith("ReaderAddress"))
-			{
-				reader.ReaderAddress = set[i].value;
-			}
-			else if(res[0].startsWith("UseTLS"))
-			{
-				reader.UseTLS = set[i].value;
-			}
-			else if(res[0].startsWith("ClientPort"))
-			{
-				reader.ClientPort = set[i].value;
-				if(isNaN(reader.ClientPort) || parseInt(reader.ClientPort) <= 0) {
-					$("#resDiv").append("Client port is not valid numeric value");
-						return;
-					}
-			}
-			else if(res[0].startsWith("ReaderPort"))
-			{
-				reader.ReaderPort = set[i].value;
-				if(isNaN(reader.ReaderPort)) {
-					delete reader.ReaderPort;
-				}
-				else if(parseInt(reader.ReaderPort) <= 0)
-				{
-					delete reader.ReaderPort;
-				}
-			}
+			delete reader.ReaderPort;
 		}
 		
 		Devices.push({Reader: reader});
@@ -123,35 +114,53 @@ function SetDevices()
         });
 }
 
-function RemoveReader(x)
+function RemoveReader(el)
 {
-	document.getElementById("readerDiv" + x).remove();
+	$(el).parents("tr").remove()       	
 }
 
 function AddDevice()
 {
-	$("#devDiv").append("<div id='readerDiv"+devCount+"'>");
-	var divi = "readerDiv"+devCount;
-	$("#"+divi).append("Reader" + (devCount+1) + "</br>");
-	var ntpEl = {Name: "ReaderAddress_" + devCount + "_property", Title: "Address", Type: "Text", Id: "ReaderAddress" + devCount + "_property", Label: "", Validation: 0, Value: "" };
-	AddNewSettingElement(ntpEl,divi);
-	ntpEl = {Name: "ClientPort_" + devCount + "_property", Title: "ClientPort ", Type: "Text", Id: "ClientPort" + devCount + "_property", Label: "", Validation: 0, Value: "" };
-	AddNewSettingElement(ntpEl,divi);
-	ntpEl = {Name: "ReaderPort_" + devCount + "_property", Title: "ReaderPort ", Type: "Text", Id: "ReaderPort" + devCount + "_property", Label: "", Validation: 0, Value: "" };
-	AddNewSettingElement(ntpEl,divi);
-	var check = {Name: "Active_"+devCount+"_check_property", Id: "Active"+devCount+"_check_property", Title: "Active", Type: "Check", Value: false , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
-	AddNewSettingElement(check,divi);
-	check = {Name: "UseTLS_"+devCount+"_check_property", Id: "UseTLS"+devCount+"_check_property", Title: "UseTLS", Type: "Check", Value: "" , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
-	AddNewSettingElement(check,divi);
-	var btn = {Name: "RemoveButton_" + devCount, Title: "", Type: "submit", Id: "RemoveButton" + devCount, Label: "", Validation: 0, Value: "Remove", Options: "", OnClick: "RemoveReader("+devCount+");", Class: "btn btn-primary" };
-	AddNewSettingElement(btn,divi);
-	$("#"+divi).append("</div></br></br>");
+	var tr = document.createElement('tr');
+	var addr = document.createElement('input');
+	addr.type = "text";
+	addr.id = "readerAddress_" + devCount;
+	addr.value = "";
+	AddElColumn(tr, addr);
+	
+	addr = document.createElement('input');
+	addr.type = "text";
+	addr.id = "clientPort_" + devCount;
+	addr.value = "";
+	AddElColumn(tr, addr);
+	
+	addr = document.createElement('input');
+	addr.type = "text";
+	addr.id = "readerPort_" + devCount;
+	addr.value = "";
+	AddElColumn(tr, addr);
+	
+	addr = document.createElement('input');
+	addr.type = "checkbox";
+	addr.id = "active_" + devCount;
+	addr.checked = false;
+	AddElColumn(tr, addr);
+	
+	addr = document.createElement('input');
+	addr.type = "checkbox";
+	addr.id = "useTls_" + devCount;
+	addr.checked = false;
+	AddElColumn(tr, addr);
+	
+	AddHtmlColumn(tr, '<input type="button" class="btn btn-danger" onclick="RemoveReader(this)" value="Remove"></input>');
+	$('#devListBody').append(tr);
+	
 	devCount++;
 }
 
 function GetStatus()
 {
-	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../img/ajax-loader.gif'/>");
 	$("#statusDiv").empty();
 	var fullurl = 'https://' + location.host + '/app/backend/norma/GetDeviceStatusAll';
 	$.ajax({
@@ -204,11 +213,55 @@ function GetStatus()
 	});
 }
 
+
+function CreateTextColumn(text){
+	var td = document.createElement('td');
+	td.appendChild(document.createTextNode(text));
+	return td;
+}
+
+function CreateTextColumn(text,span){
+	var td = document.createElement('td');
+	td.appendChild(document.createTextNode(text));
+	if(span > 0)
+		td.colSpan = span;
+	return td;
+}
+
+function AddHeaderColumn(row, text){
+	var hdrTd = document.createElement('th'); 
+	hdrTd.style="font-weight:bold"; 
+	hdrTd.appendChild(document.createTextNode(text));
+	row.appendChild(hdrTd);
+}
+
+function AddTextColumn(row, text){
+	var td = document.createElement('td');
+	td.appendChild(document.createTextNode(text));
+	row.appendChild(td);
+}
+
+function AddElColumn(row, el){
+	var td = document.createElement('td');
+	td.appendChild(el);
+	row.appendChild(td);
+}
+
+function AddHtmlColumn(row, html){
+	var td = document.createElement('td');
+	td.innerHTML = html;
+	row.appendChild(td);
+}
+
+
 function GetDevices()
 {
 	$("#resDiv").empty();
-	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../img/ajax-loader.gif'/>");
 	$("#devDiv").empty();
+	$("#devListBody").empty();
+	devCount = 0;
+	var tbody = document.createElement('tbody');
 	var fullurl = 'https://' + location.host + '/app/backend/norma/GetDevices';
 	$.ajax({
 		url: fullurl,
@@ -220,23 +273,45 @@ function GetDevices()
 		
 			for(var x=0;x<data.length;x++)
 			{	
-				$("#devDiv").append("<div id='readerDiv"+x+"'>");
-				var divi = "readerDiv"+x;
-				$("#"+divi).append("Reader" + (x+1) + "</br>");
-				var ntpEl = {Name: "ReaderAddress_" + x + "_property", Title: "Address " + x, Type: "Text", Id: "ReaderAddress" + x + "_property", Label: "", Validation: 0, Value: data[x].Reader.ReaderAddress };
-				AddNewSettingElement(ntpEl,divi);
-				ntpEl = {Name: "ClientPort_" + x + "_property", Title: "ClientPort " + x, Type: "Text", Id: "ClientPort" + x + "_property", Label: "", Validation: 0, Value: data[x].Reader.ClientPort };
-				AddNewSettingElement(ntpEl,divi);
-				ntpEl = {Name: "ReaderPort_" + x + "_property", Title: "ReaderPort " + x, Type: "Text", Id: "ReaderPort" + x + "_property", Label: "", Validation: 0, Value: data[x].Reader.ReaderPort };
-				AddNewSettingElement(ntpEl,divi);
-				var check = {Name: "Active_"+x+"_check_property", Id: "Active"+x+"_check_property", Title: "Active", Type: "Check", Value: data[x].Reader.Active , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
-				AddNewSettingElement(check,divi);
-				check = {Name: "UseTLS_"+x+"_check_property", Id: "UseTLS"+x+"_check_property", Title: "UseTLS", Type: "Check", Value: data[x].Reader.UseTLS , Validation: 0, Options: [ {Value: true} , {Value: false} ]};				
-				AddNewSettingElement(check,divi);
-				var btn = {Name: "RemoveButton_" + x, Title: "", Type: "submit", Id: "RemoveButton" + x, Label: "", Validation: 0, Value: "Remove", Options: "", OnClick: "RemoveReader("+x+");", Class: "btn btn-primary" };
-				AddNewSettingElement(btn,divi);
-				$("#"+divi).append("</div></br></br>");
+				//$("#devDiv").append("<div id='readerDiv"+x+"'>");
+				//var divi = "readerDiv"+x;
+
+				var tr = document.createElement('tr');
+				var addr = document.createElement('input');
+				addr.type = "text";
+				addr.id = "readerAddress_" + x;
+				addr.value = data[x].Reader.ReaderAddress;
+				AddElColumn(tr, addr);
+				
+				addr = document.createElement('input');
+				addr.type = "text";
+				addr.id = "clientPort_" + x;
+				addr.value = data[x].Reader.ClientPort;
+				AddElColumn(tr, addr);
+				
+				addr = document.createElement('input');
+				addr.type = "text";
+				addr.id = "readerPort_" + x;
+				addr.value = data[x].Reader.ReaderPort;
+				AddElColumn(tr, addr);
+				
+				addr = document.createElement('input');
+				addr.type = "checkbox";
+				addr.id = "active_" + x;
+				addr.checked = data[x].Reader.Active;
+				AddElColumn(tr, addr);
+				
+				addr = document.createElement('input');
+				addr.type = "checkbox";
+				addr.id = "useTls_" + x;
+				addr.checked = data[x].Reader.UseTLS;
+				AddElColumn(tr, addr);
+
+				AddHtmlColumn(tr, '<input type="button" class="btn btn-danger" onclick="RemoveReader(this)" value="Remove"></input>');
+				$('#devListBody').append(tr);
+		
 				devCount++;
+				
 			}	
 			
 		},
@@ -250,7 +325,7 @@ function GetDevices()
 function GetLog()
 {
 	$("#normalogDiv").val('');
-	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../img/ajax-loader.gif'/>");
 	var fullurl = 'https://' + location.host + '/app/backend/norma/GetLog';
 	$.ajax({
 		url: fullurl,
@@ -275,5 +350,4 @@ GetLog();
 
 </body>
 
-<!--#include file="$ar8xroot/app_footer.htm" -->
 

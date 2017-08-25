@@ -8,5 +8,6 @@ if [ "$1" = "start" ]; then
 	~/NormaRpi
 else
 	# Signal stop to your process(es)
+	pkill -u norma
 	echo "EXIT"
 fi
