@@ -2,9 +2,9 @@
     "Devices": [
         {
             "Reader": {
-			    "Active": false,
-				"ReaderAddress": "127.0.01",
-				"ReaderPort": 6734,
+			    "Active": true,
+				"ReaderAddress": "127.0.0.1",
+				"ReaderPort": 4333,
                 "ClientPort": 5084,
 				"UseTLS": false
             }

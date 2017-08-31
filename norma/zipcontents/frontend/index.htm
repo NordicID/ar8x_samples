@@ -334,11 +334,11 @@ function GetLog()
 		processData: false, // Don't process the files
 		success: function (data) {
 			$("#loaderDiv").html("</br>");
-			$("#normalogDiv").val(data);
+			$("#normalogDiv").val("Return " + data);
 		},
 		error: function (data) {
 			$("#loaderDiv").html("</br>");
-			$("#normalogDiv").val(data);
+			$("#normalogDiv").val("ERROR: " + data);
 		}
 	});
 }

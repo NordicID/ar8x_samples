@@ -5,7 +5,7 @@ if [ "$1" = "start" ]; then
 	echo "Starting NormaConfig"
 	mono ~/NormaConfig.exe &
 	echo "Starting Norma"
-	~/NormaRpi
+	~/Norma
 else
 	# Signal stop to your process(es)
 	pkill -u norma
