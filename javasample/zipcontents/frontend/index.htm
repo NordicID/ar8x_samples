@@ -1,13 +1,13 @@
-<!--#include file="$ar8xroot/app_header.htm" -->
+
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Mosquitto Websockets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="mqttws31.js" type="text/javascript"></script>
-    <script src="jquery.min.js" type="text/javascript"></script>
-    <script src="config.js" type="text/javascript"></script>
+    <script src="/app/frontend/javasample/mqttws31.js" type="text/javascript"></script>
+    <script src="/app/frontend/javasample/jquery.min.js" type="text/javascript"></script>
+    <script src="/app/frontend/javasample/config.js" type="text/javascript"></script>
 
     <script type="text/javascript">
     var mqtt;
@@ -69,15 +69,14 @@
 			$('#events').append('<li>' + topic + ' = ' + payload + '</li>');
     };
 
-
-    $(document).ready(function() {
-        MQTTconnect();
-    });
+   	
+    MQTTconnect();
+    
 
 	function runSample()
 	{
 		var paramData = { "name": "javasample"}; 
-		var fullurl = 'https://' + location.host + '/Core/AppManagement/StartApplication';
+		var fullurl = 'https://' + location.host + '/Core/Application/Start';
 		$.ajax({
 			url: fullurl,
 			type: "POST",
@@ -115,4 +114,3 @@
     </div>
   </body>
 </html>
-<!--#include file="$ar8xroot/app_footer.htm" -->
