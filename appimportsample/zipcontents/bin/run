@@ -5,5 +5,6 @@ if [ "$1" = "start" ]; then
 	mono ~/ThirdPartyAppPing.exe
 else
 	# Signal stop to your process(es)
+	pkill -u appexample
 	echo "EXIT"
 fi
