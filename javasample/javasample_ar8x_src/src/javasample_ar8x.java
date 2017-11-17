@@ -160,23 +160,22 @@ public class javasample_ar8x {
 						// We receive connected event when NurApi transport is connected
 						publishMessage("connectedEvent()", topicev);
 						try {
-							mApi.clearIdBuffer();
-							
+							mApi.clearIdBuffer(true);
 							NurRespInventory resp = mApi.inventory();
-							
-							System.out.println("Inventory found " + resp.numTagsFound + " tags");
-							publishMessage("Inventory found " + resp.numTagsFound + " tags", topicev);
 							
 							if(resp.numTagsFound > 0)
 							{
 								mApi.fetchTags();
-								
-								NurTagStorage tagStorage = mApi.getStorage();
-								
-								for (int i = 0; i < tagStorage.size(); i++) {
-									
-									NurTag tag = tagStorage.get(i);		
-									publishMessage(tag.getEpcString(), topictags);
+								synchronized (mApi.getStorage()) 
+								{
+									System.out.println("Inventory found " +mApi.getStorage().size() + " tags");
+									publishMessage("Inventory found " +mApi.getStorage().size() + " tags", topicev);
+									for (int n=0; n<mApi.getStorage().size(); n++)
+									{
+										NurTag t = mApi.getStorage().get(n);				
+										publishMessage(t.getEpcString(), topictags);
+									}
+									mApi.getStorage().clear();
 								}
 							}
 						} catch (Exception e) { 
@@ -274,7 +273,6 @@ public class javasample_ar8x {
 						System.exit(1);
 					}
 				}
-
 				System.out.println("javasample_ar8x main leave");
 				
 	}

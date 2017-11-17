@@ -1,34 +1,54 @@
-<!--#include file="$ar8xroot/app_header.htm" -->
-<script type="text/javascript" src="<!--#echo var="ar8xroot" -->/property.js"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>LLRP Configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- jquery -->
+	<script src="../../../js/libs/jquery-2.1.1.min.js"></script>
+    
+    <!-- bootstrap: Latest compiled and minified CSS -->
+	<link href="../../../css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+
+	<!-- bootstrap: Latest compiled and minified JavaScript -->
+	<script src="../../../js/bootstrap/bootstrap.min.js"></script>
+
+    <script type="text/javascript"></script>
+	</head>
 <body>
 <h2>Node.js Nur sample manager</h2>
 <div id="loaderDiv"></div>
 <div id="nodeDiv"></div>
 <script type="text/javascript">
-var epcSelect = {	
-		Name: "epcSelect",
-		Title: "Seen EPCs",
-		Id: "epcSelect",
-		Validation: 0,
-		Value: "",
-		Options: [],
-		Type: "Select"
-				};
-var bankSelect = {	
-		Name: "bankSelect",
-		Title: "Selected bank",
-		Id: "bankSelect",
-		Validation: 0,
-		Value: "",
-		Options: [{Value: 0, Name: "Passwd"}, {Value: 1, Name: "EPC"},{Value: 2, Name: "TID"},{Value: 3, Name: "User memory"}],
-		Type: "Select"
-				};
-var wordAddress = {Name: "wordAddress", Title: "Word address", Id: "wordAddress", Label: "", Validation: 0, Value: 0 };
-var byteCount = {Name: "byteCount", Title: "Byte count", Id: "byteCount", Label: "", Validation: 0, Value: 2 };
-				
+
+var bankSelect = document.createElement('select');
+bankSelect.type = "select";
+bankSelect.id = "bankSelect";
+var options = [{Value: 0, Name: "Passwd"}, {Value: 1, Name: "EPC"},{Value: 2, Name: "TID"},{Value: 3, Name: "User memory"}];
+for	(var index = 0; index < options.length; index++) 
+{
+	var opt = document.createElement('option');
+	opt.innerHTML = options[index].Name;
+	opt.value = options[index].Value;
+	bankSelect.appendChild(opt);
+}
+
+
+var byteCnt = document.createElement('input');
+				byteCnt.type = "text";
+				byteCnt.id = "byteCount";
+				byteCnt.name = "byteCount";
+				byteCnt.value = "2";
+
+var wordAddress = document.createElement('input');
+				wordAddress.type = "text";
+				wordAddress.id = "wordAddress";
+				wordAddress.name = "wordAddress";
+				wordAddress.value = "0";				
+	
 function inventory()
 {
-	$("#loaderDiv").html("Performing inventory</br><img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#loaderDiv").html("Performing inventory<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
 	var fullurl = 'https://' + location.host + '/app/backend/nodenursample/inventory';
 	$("#nodeDiv").html("");
     $.ajax({
@@ -39,22 +59,33 @@ function inventory()
 		success: function (data) {
 			if(data.length == 1 && data[0].startsWith("ERROR"))
 			{
-				$("#nodeDiv").append(data + "</br>");
+				$("#nodeDiv").append("</br>" + data + "</br>");
 				$("#loaderDiv").html("");
 			}
 			else
 			{
-				epcSelect.Options = [];
+				var divHtml = "";
+				var epcSel = document.createElement('select');
+				epcSel.type = "select";
+				epcSel.id = "epcSelect";
 				for	(var index = 0, l = data.length; index < l; index++) 
 				{
-					epcSelect.Options.push({ Name: data[index], Value: data[index]});
+					var option = document.createElement('option');
+					option.innerHTML = data[index];
+					option.value = data[index];
+					epcSel.appendChild(option);
 				}
-				AddNewSettingElement(epcSelect, "nodeDiv");
-				AddNewSettingElement(bankSelect, "nodeDiv");
-				AddNewSettingElement(wordAddress, "nodeDiv");
-				AddNewSettingElement(byteCount	, "nodeDiv");
+				$("#nodeDiv").append("</br>Selected EPC" );
+				$("#nodeDiv").append(epcSel);
+				$("#nodeDiv").append("</br>Selected bank");
+				$("#nodeDiv").append(bankSelect);
+				 
+				$("#nodeDiv").append("</br>Word address");
+				$("#nodeDiv").append(wordAddress);
+				$("#nodeDiv").append("</br>Byte count");
+				$("#nodeDiv").append(byteCnt);
+				
 				$("#loaderDiv").html("");
-				//$("#nodeDiv").append(data + "</br>");
 			}
 		},
 		error: function (data) {
@@ -66,7 +97,7 @@ function inventory()
 
 function readTagByEPC()
 {
-	$("#loaderDiv").html("Reading tag contents</br><img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#loaderDiv").html("Reading tag contents<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
 	var epcData = document.getElementById("epcSelect").value;
 	var bankData = document.getElementById("bankSelect").value;
 	var addrData = document.getElementById("wordAddress").value;
@@ -81,11 +112,11 @@ function readTagByEPC()
 			contentType: "application/json",
             processData: false, // Don't process the files
             success: function (data) {
-                $("#nodeDiv").append("ReadTagByEPC result: " + data + "</br>");
+                $("#nodeDiv").append("</br>ReadTagByEPC result: " + data);
 				$("#loaderDiv").html("");
             },
             error: function (data) {
-                $("#nodeDiv").append("backend service connection error " + data + "</br>");  
+                $("#nodeDiv").append("</br>Backend service connection error " + data);  
 				$("#loaderDiv").html("");
             },
         });
@@ -96,6 +127,5 @@ inventory();
 <input type="button" class="btn btn-primary" onclick="inventory()" value="Inventory"/>
 <input type="button" class="btn btn-primary" onclick="readTagByEPC()" value="Read selected tag"/>
 </body>
-
-<!--#include file="$ar8xroot/app_footer.htm" -->
+</html>
 

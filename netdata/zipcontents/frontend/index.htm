@@ -1,4 +1,20 @@
-<!--#include file="$ar8xroot/app_header.htm" -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Netdata</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- jquery -->
+	<script src="../../../js/libs/jquery-2.1.1.min.js"></script>
+    
+    <!-- bootstrap: Latest compiled and minified CSS -->
+	<link href="../../../css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+
+	<!-- bootstrap: Latest compiled and minified JavaScript -->
+	<script src="../../../js/bootstrap/bootstrap.min.js"></script>
+
+    <script type="text/javascript"></script>
+	</head>
 <body>
 <h2>Netdata</h2>
 This application contains netdata, which can be used for monitoring the health of your AR8x platform.
@@ -12,7 +28,7 @@ If you wish to configure the netdata, you need to edit the netdata.conf located 
 
 function GetCPUStats()
 {
-	$("#loaderDiv").html("<img src='"+ar8xroot+"/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
 	var fullurl = "https://"+location.host+"/app/backend/healthcheck/api/v1/data?chart=system.cpu&format=array&points=1&group=average&options=absolute|jsonwrap|nonzero&after=-1";
 	$.ajax({
 		url: fullurl,
@@ -47,4 +63,4 @@ function OpenUI()
 <input type="button" class="btn btn-primary" onclick="OpenUI();" value="Open UI"/>
 <input type="button" class="btn btn-primary" onclick="GetCPUStats();" value="Test netdata"/>
 </body>
-<!--#include file="$ar8xroot/app_footer.htm" -->
+</html>

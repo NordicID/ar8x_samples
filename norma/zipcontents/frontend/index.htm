@@ -1,4 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>LLRP Configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- jquery -->
+	<script src="../../../js/libs/jquery-2.1.1.min.js"></script>
+    
+    <!-- bootstrap: Latest compiled and minified CSS -->
+	<link href="../../../css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
 
+	<!-- bootstrap: Latest compiled and minified JavaScript -->
+	<script src="../../../js/bootstrap/bootstrap.min.js"></script>
+
+    <script type="text/javascript"></script>
+	</head>
 <body>
 <h2>LLRP Configuration</h2>
 <div id="pongDiv"></div>
@@ -47,7 +63,7 @@
     </div>
   </div>
   
-<script src="../../js/helpers.js"></script>
+<script src="../../../js/helpers.js"></script>
 <script type="text/javascript">
 
 var devCount = 0;
@@ -160,7 +176,7 @@ function AddDevice()
 
 function GetStatus()
 {
-	$("#loaderDiv").html("<img src='"+location.host+"/../../../img/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
 	$("#statusDiv").empty();
 	var fullurl = 'https://' + location.host + '/app/backend/norma/GetDeviceStatusAll';
 	$.ajax({
@@ -257,7 +273,7 @@ function AddHtmlColumn(row, html){
 function GetDevices()
 {
 	$("#resDiv").empty();
-	$("#loaderDiv").html("<img src='"+location.host+"/../../../img/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
 	$("#devDiv").empty();
 	$("#devListBody").empty();
 	devCount = 0;
@@ -325,7 +341,7 @@ function GetDevices()
 function GetLog()
 {
 	$("#normalogDiv").val('');
-	$("#loaderDiv").html("<img src='"+location.host+"/../../../img/ajax-loader.gif'/>");
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
 	var fullurl = 'https://' + location.host + '/app/backend/norma/GetLog';
 	$.ajax({
 		url: fullurl,
@@ -349,5 +365,6 @@ GetLog();
 </script>
 
 </body>
+</html>
 
 

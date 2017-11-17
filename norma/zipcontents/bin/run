@@ -7,6 +7,7 @@ if [ "$1" = "start" ]; then
 	echo "Starting Norma"
 	~/Norma
 else
+
 	# Signal stop to your process(es)
 	pkill -u norma
 	echo "EXIT"
