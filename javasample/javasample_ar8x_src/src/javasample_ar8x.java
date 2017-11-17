@@ -2,7 +2,7 @@
 import com.nordicid.nurapi.NurApi;
 import com.nordicid.nurapi.NurApiException;
 import com.nordicid.nurapi.NurApiListener;
-import com.nordicid.nurapi.NurApiSerialTransport;
+import com.nordicid.nurapi.NurApiSocketTransport;
 import com.nordicid.nurapi.NurEventAutotune;
 import com.nordicid.nurapi.NurEventClientInfo;
 import com.nordicid.nurapi.NurEventDeviceInfo;
@@ -244,56 +244,37 @@ public class javasample_ar8x {
 					}
 				});
 				
-				String arr[] = null;
-				try {
-					arr = NurApiSerialTransport.enumeratePorts();
-				} catch (NurApiException e1) {
-					e1.printStackTrace();
-				}
-				
-				String nurDevice = "/dev/ttyACM0";
-				boolean nurFound = false;
-				publishMessage("Available COM Ports : ", topicev);
-				for(int i = 0; i < arr.length; i++) {
-					publishMessage(arr[i], topicev);
-					if(arr[i].indexOf(nurDevice) != -1) {
-						nurFound = true;
-					}
-				}
-				
-				if(nurFound)
+
+				String nurDevice = "127.0.0.1";
+				int nurPort = 4333;
+
+				publishMessage("\nConnecting to : " + nurDevice + "\n", topicev);
+				try 
 				{
-					publishMessage(String.format("\nConnecting to port : %s\n", nurDevice), topicev);
+					NurApiSocketTransport socket = new NurApiSocketTransport(nurDevice, nurPort);
+					mApi.setTransport(socket);
+					mApi.connect();
+				} 
+				catch (Exception e) {
+					
+					if(e.getMessage().equals("Port in use.")) {
+						publishMessage("Sorry! Port is in use!", topicev);
+					}
+					else {
+						e.printStackTrace();
+					}
+					
 					try {
-						mApi.setTransport(new NurApiSerialTransport(nurDevice, NurApi.DEFAULT_BAUDRATE));
-						
-						mApi.connect();
-					} catch (Exception e) {
-						
-						if(e.getMessage().equals("Port in use.")) {
-							publishMessage("Sorry! Port is in use!", topicev);
-						}
-						else {
-							e.printStackTrace();
-						}
-						
-						try {
-							mApi.disconnect();	
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-						finally {
-							cleanUp();
-							System.exit(1);
-						}
+						mApi.disconnect();	
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					finally {
+						cleanUp();
+						System.exit(1);
 					}
 				}
-				else
-				{
-					publishMessage("No NUR Modules found!", topicev);
-					cleanUp();
-					System.exit(1);
-				}
+
 				System.out.println("javasample_ar8x main leave");
 				
 	}
