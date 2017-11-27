@@ -113,49 +113,6 @@ static void cleanup(HANDLE hApi)
 	NurApiFree(hApi);
 }
 
-/* 
-	Handle the command line's port name given for connection.
-*/
-int handle_connect(HANDLE hApi, TCHAR *portName, int baudRate, int *connError)
-{
-	int error = NUR_ERROR_TRANSPORT;
-#ifndef __linux__
-	TCHAR *tempPortName;
-	int comNum;
-#endif
-
-	if (portName == NULL)
-		return 0;
-	
-#ifdef __linux__
-	error = NurApiConnectSerialPortEx(hApi, portName, baudRate);	
-#else
-	tempPortName = allocstr(_tcslen(portName) + 20);
-	_tcscpy(tempPortName, portName);
-	_tcsupr(tempPortName);
-
-	if (_stscanf(tempPortName, _T("COM%d"), &comNum) == 1) {
-		
-		if (comNum < 1)
-			return 0;
-		if (comNum > 9) 
-			_stprintf(tempPortName, _T("\\\\.\\COM%d"), comNum);
-		else
-			_tcscpy(tempPortName, portName);
-		
-		_tprintf(_T("Port to open is \"%s\".\n"), tempPortName);
-		error = NurApiConnectSerialPortEx(hApi, tempPortName, baudRate);
-		
-		free((void *)tempPortName);
-	}
-	
-#endif
-
-	if (connError != NULL)
-		*connError = error;
-	return (error == NUR_SUCCESS);
-}
-
 void usage(TCHAR *pref)
 {
 	_tprintf(_T("Usage:\n\n"));
@@ -190,7 +147,7 @@ int main(int argc, char *argv[])
 	HANDLE hApi = NULL;
 	TCHAR connStr[100] = { 0 };
 	
-	if (argc < 3) {
+	if (argc < 2) {
 		usage(argv[0]);
 		return 0;
 	}
@@ -205,28 +162,29 @@ int main(int argc, char *argv[])
 	}
 
 	error = NUR_SUCCESS;
-	/* Try to connect to the port given in command line. */
-	if (!handle_connect(hApi, argv[1], NUR_DEFAULT_BAUDRATE, &error)) {
+	/* Try to connect to localhost */
+	error = NurApiConnectSocket(hApi, _T("127.0.0.1"), 4333);
+	if (error != NUR_SUCCESS) {
 		/* 
 			In Linux you probably need to 'sudo' (in case you are sure that the port is present and device is connected to it). 
 		*/
-		_tprintf(_T("Fatal error: could not connect to %s.\n"), argv[1]);
+		_tprintf(_T("Fatal error: could not connect to localhost\n"));
 		error_message(_T("Connection failed"), error);
 		cleanup(hApi);
 		return 0;		
 	}
-	action = atoi(argv[2]);
+	action = atoi(argv[1]);
 		
 	if(action == 2) {
-		if(argc < 7) {
+		if(argc < 6) {
 			_tprintf(_T("Tag read: parameters missing, only %d available\n"), argc);
 			return 0;
 		}
 		else
 		{
-			bank = atoi(argv[4]);
-			wordAddress = atoi(argv[5]);
-			readByteCount = atoi(argv[6]);		
+			bank = atoi(argv[3]);
+			wordAddress = atoi(argv[4]);
+			readByteCount = atoi(argv[5]);		
 		}
 	}
 	
@@ -241,7 +199,7 @@ int main(int argc, char *argv[])
 			error = simple_inventory(hApi, &alive);
 		break;
 		case 2: 
-			error = read_tag(hApi, argv[3], bank, wordAddress, readByteCount);
+			error = read_tag(hApi, argv[2], bank, wordAddress, readByteCount);
 			break;
 		default:
 			_tprintf(_T("Invalid operation\n"));
@@ -256,5 +214,6 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
 
 

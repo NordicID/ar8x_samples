@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 // Performs an inventory using default rounds, Q and session and returns a JSON-array containing hex-string representation of EPCs seen in the RF-field
 app.get(ws_prefix + 'inventory', function (req, res) {
         // Sync call to exec()
-        var ret = shell.exec(__dirname + '/nurconrpi /dev/nurModule 1', {silent:true}).stdout;
+        var ret = shell.exec(__dirname + '/nurconrpi 1', {silent:true}).stdout;
         console.log(ret);
         var reslines = ret.match(/[^\r\n]+/g);
 		res.setHeader('Content-Type', 'application/json');
@@ -33,7 +33,7 @@ app.post(ws_prefix + 'readTagByEPC', function(req, res) {
         var wordAddress = req.body.wordAddress;
         var readByteCount = req.body.readByteCount;
 		console.log("readTagByEPC " + epc + " " + bank + " " + wordAddress + " " + readByteCount);
-        var ret = shell.exec(__dirname + '/nurconrpi /dev/nurModule 2 ' + epc + ' ' + bank + ' ' + wordAddress + ' ' + readByteCount, {silent:true}).stdout;
+        var ret = shell.exec(__dirname + '/nurconrpi 2 ' + epc + ' ' + bank + ' ' + wordAddress + ' ' + readByteCount, {silent:true}).stdout;
         res.setHeader('Content-Type', 'application/json');
 		res.end(JSON.stringify(ret));
         console.log(ret);
