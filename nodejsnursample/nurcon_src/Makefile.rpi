@@ -1,7 +1,7 @@
 #Raspberry Pi makefile
 
 #Probably only 'gcc' can be used if compiling with the board's toolchain.
-CC = ../../toolchain/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc
+CC = ../../../ar8x_raspbian/toolchain/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc
 
 #For Windows
 RM = cmd /C del
@@ -12,7 +12,7 @@ RM = cmd /C del
 SRC = ./src/main.c ./src/util.c ./src/setup.c ./src/inventory.c ./src/readercaps.c
 
 INCLUDE = -I./inc/
-LIBDEF = -L./lib/ -lNurApiRasPi -lm -lpthread
+LIBDEF = -L./lib/ -lNurApiRaspi -lm -lpthread
 CFLAGS = -D_PLAT_RASPI -DNUR_EXPOSE_WIN32API 
 
 OUTPUT = nurconrpi
