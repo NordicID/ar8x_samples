@@ -1,4 +1,10 @@
 This document list the changes and updates between the different Norma versions built for the Nordic ID Smart readers.
 
+Changes in v1.0.2
+- AISpec AntennaID 0 now utilizing all enabled antennas(check AntennaProperties "connected"-state)
+- Add_ROSpec now replaces correctly the previous entry
+- KeepAliveSpec now closes the connection if periodic keepalive is used and missed ACKs > 5
+- Connection overriding now allowed from "previous" client i.e. same client can reconnect if connection dropped due to network loss or similar. Peridioc keep alive recommended even with this.
+
 Changes in v1.0.1
 - Fixes issue where AISpec AntennaID 0 did not use all antennas defined in AntennaProperties which had AntennaConnected set to 1
