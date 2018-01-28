@@ -1,5 +1,8 @@
 This document list the changes and updates between the different Norma versions built for the Nordic ID Smart readers.
 
+Changes in v1.0.3
+- AntennaProperties/AntennaConnected now utilized for active ROSpecs => if AISpec antennaID(s) == 0 and new antennas connected/disconnected(AntennaConnected state changed via SET_READER_CONFIG) => internal antenna array updated for running ROSpecs
+
 Changes in v1.0.2
 - AISpec AntennaID 0 now utilizing all enabled antennas(check AntennaProperties "connected"-state)
 - Add_ROSpec now replaces correctly the previous entry
