@@ -1,13 +1,1 @@
-{
-    "Devices": [
-        {
-            "Reader": {
-			    "Active": true,
-				"ReaderAddress": "127.0.0.1",
-				"ReaderPort": 4333,
-                "ClientPort": 5084,
-				"UseTLS": false
-            }
-        }
-    ]
-}
+{"Devices":[{"Reader":{"Active":true,"ReaderAddress":"127.0.0.1","ClientPort":5084,"UseTLS":false,"SensorDisable":false,"ReaderPort":4333}}]}

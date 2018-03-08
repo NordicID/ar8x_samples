@@ -1,5 +1,13 @@
 This document list the changes and updates between the different Norma versions built for the Nordic ID Smart readers.
 
+Changes in v1.0.4
+- ChannelIndex used from RFTransmitter settings if available
+- HoptableIDs changed to match NurApi.Region setting
+- ReceiverSensitivity now in DeviceCapabilities, used also from Spec/ReaderConfig when performing Spec
+- Added option for reader configuration(in web view) to disable sensors from device i.e. Norma does not list the tap/light sensors from Sampo S1 as one of its GPIOs. 
+- GPOPortNumber indexing changed from 5-8 to 1-4. 
+- C1G2SingulationControl parameters used properly also when TagInventoryStateAware is 0
+
 Changes in v1.0.3
 - AntennaProperties/AntennaConnected now utilized for active ROSpecs => if AISpec antennaID(s) == 0 and new antennas connected/disconnected(AntennaConnected state changed via SET_READER_CONFIG) => internal antenna array updated for running ROSpecs
 

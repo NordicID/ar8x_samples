@@ -22,6 +22,8 @@ namespace NormaConfig
         [DataMember]
         public bool UseTLS { get; set; }
         [DataMember]
+        public bool SensorDisable { get; set; }
+        [DataMember]
         public int? ReaderPort { get; set; }
     }
 

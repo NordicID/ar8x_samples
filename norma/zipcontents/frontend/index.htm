@@ -39,6 +39,7 @@
 					<th>Reader port</th>
 					<th>Active</th>
 					<th>Use TLS</th>
+					<th>Disable sensors</th>
 					<th>Remove</th>
 					<th></th>
 				</tr>
@@ -73,7 +74,7 @@ function SetDevices()
 	$("#resDiv").empty();
 	//var set = GetSettingElements("devDiv");
 	var Devices = [];
-	var reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1};
+	var reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1, SensorDisable: false};
 	var readerEnum = -1;
 	//data[x].Reader.ReaderAddress
 	for(var i = 0; i < devCount; i++)
@@ -85,6 +86,7 @@ function SetDevices()
 		reader.ReaderAddress = document.getElementById('readerAddress_' + i).value;
 		reader.Active = document.getElementById('active_' + i).checked;
 		reader.UseTLS = document.getElementById('useTls_' + i).checked;
+		reader.SensorDisable = document.getElementById('sensorDisable_' + i).checked;
 		reader.ClientPort = document.getElementById('clientPort_' + i).value;
 		if(isNaN(reader.ClientPort) || parseInt(reader.ClientPort) <= 0) {
 		$("#resDiv").append("Client port is not valid numeric value");
@@ -101,7 +103,7 @@ function SetDevices()
 		}
 		
 		Devices.push({Reader: reader});
-		reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1};
+		reader = {Active: false, ReaderAddress: "",  ClientPort: -1, UseTLS: false, ReaderPort: -1, SensorDisable: false};
 	}
 	var fullurl = 'https://' + location.host + '/app/backend/norma/SetDevices';
 	var jsoni = JSON.stringify(Devices);
@@ -323,6 +325,13 @@ function GetDevices()
 				addr.checked = data[x].Reader.UseTLS;
 				AddElColumn(tr, addr);
 
+				addr = document.createElement('input');
+				addr.type = "checkbox";
+				addr.id = "sensorDisable_" + x;
+				addr.checked = data[x].Reader.SensorDisable;
+				AddElColumn(tr, addr);
+
+				
 				AddHtmlColumn(tr, '<input type="button" class="btn btn-danger" onclick="RemoveReader(this)" value="Remove"></input>');
 				$('#devListBody').append(tr);
 		
