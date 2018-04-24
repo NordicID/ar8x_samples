@@ -26,5 +26,3 @@ Changes in v1.0.2
 
 Changes in v1.0.1
 - Fixes issue where AISpec AntennaID 0 did not use all antennas defined in AntennaProperties which had AntennaConnected set to 1
-7871828
-7881309
