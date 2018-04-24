@@ -1,5 +1,8 @@
 This document list the changes and updates between the different Norma versions built for the Nordic ID Smart readers.
 
+Changes in v1.0.6
+- GetRospecs returns now StatusCode_M_Success also when no ROSpecs available
+
 Changes in v1.0.5
 - Removed reporting of all available HopTables since reader is anyway locked to a specific region
 - Default reader configuration correctly fills now ROSpec AntennaConfiguration if its only partial(i.e has only RFTransmitter properties but others are absent)
