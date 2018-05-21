@@ -9,7 +9,7 @@ RM = cmd /C del
 #For Linux
 #RM = rm -f
 
-SRC = ./src/main.c ./src/util.c ./src/menu.c  ./src/setup.c ./src/scan.c ./src/inventory.c ./src/tags.c ./src/readercaps.c ./src/notification.c ./src/ethmenu.c
+SRC = ./src/main.c ./src/util.c ./src/setup.c ./src/inventory.c ./src/readercaps.c
 INCLUDE = -I./inc/
 LIBDEF = -L./lib/ -lNurApiBeagleBone -lm -lpthread
 CFLAGS = -D_PLAT_BBONE -DNUR_EXPOSE_WIN32API
