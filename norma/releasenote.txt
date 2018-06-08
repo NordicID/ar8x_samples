@@ -1,5 +1,8 @@
 This document list the changes and updates between the different Norma versions built for the Nordic ID Smart readers.
 
+Changes in v.1.0.7
+- RxSensitivity uses RSSI filter on AR82/AR85/AR62/Sampo S2 if using newer chip. Range is the same as for other chip versions i.e. -70 to -50. Highest sensitivity allowing lower RSSI also.
+
 Changes in v1.0.6
 - GetRospecs returns now StatusCode_M_Success also when no ROSpecs available
 
