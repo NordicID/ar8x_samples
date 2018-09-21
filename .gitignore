@@ -6,3 +6,16 @@ javasample/jdk1.8.0_121/
 norma/NormaConfig/.vs/
 norma/NormaConfig/NormaConfig/bin/
 norma/NormaConfig/NormaConfig/obj/
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+package
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
