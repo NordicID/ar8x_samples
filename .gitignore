@@ -13,6 +13,7 @@ norma/NormaConfig/NormaConfig/obj/
 
 # Package Files #
 *.jar
+!*/lib/*.jar
 *.war
 *.ear
 package
