@@ -10,3 +10,7 @@ Command line tool for signing smart reader applications
 - Signed zip file
   - ar_signtool_cli 'zipfile' [output zip]
 
+### Linux
+
+- Linux is supported through mono
+  - Ubuntu: install mono-complete
