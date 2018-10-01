@@ -23,12 +23,17 @@ namespace ar_signtool_cli
             try
             {
                 string input = args[0];
+
+                // Strip trailing slash
+                if (input.EndsWith(Path.DirectorySeparatorChar.ToString())) {
+                    input = input.Remove(input.Length - 1);
+                }
+
                 FileInfo inputFi = new FileInfo(input);
 
                 string output = args.Length > 1 ? args[1] : null;
-                if (output == null)
-                {
-                    output = AppDomain.CurrentDomain.BaseDirectory + Path.GetFileNameWithoutExtension(inputFi.Name) + "_signed.zip";
+                if (output == null) {
+                    output = System.Environment.CurrentDirectory + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(inputFi.Name) + "_signed.zip";
                 }
                 Console.WriteLine("Input: " + input);
                 Console.WriteLine("Output: " + output);
