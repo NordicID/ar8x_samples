@@ -1,7 +1,7 @@
 // host = '172.16.153.110';	// hostname or IP address
 host = location.host;	// hostname or IP address
-port = 1884;
-useTLS = false;
+port = (location.protocol == "https:") ? 1885 : 1884;
+useTLS = location.protocol == "https:";
 username = null;
 password = null;
 // username = "bob";
