@@ -1,0 +1,21 @@
+#ARM Linux GNUEABI makefile
+CC = arm-linux-gnueabi-gcc
+
+RM = rm -f
+
+SRC = ./src/main.c ./src/util.c ./src/setup.c ./src/inventory.c ./src/readercaps.c
+
+INCLUDE = -I./inc/
+LIBDEF = -L./lib/ -lNurApiArmLinux -lm -lpthread
+CFLAGS = -D_PLAT_ARMLINGNUEABI -DNUR_EXPOSE_WIN32API
+
+OUTPUT = nurconarm
+
+all:
+	$(CC) $(INCLUDE) $(CFLAGS) $(SRC) -o $(OUTPUT) $(LIBDEF)
+
+ver:
+	$(CC) --version
+
+clean:
+	$(RM) $(OUTPUT)

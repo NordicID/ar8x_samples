@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Netdata</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- jquery -->
+	<script src="../../../js/libs/jquery-2.1.1.min.js"></script>
+    
+    <!-- bootstrap: Latest compiled and minified CSS -->
+	<link href="../../../css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+
+	<!-- bootstrap: Latest compiled and minified JavaScript -->
+	<script src="../../../js/bootstrap/bootstrap.min.js"></script>
+
+    <script type="text/javascript"></script>
+	</head>
+<body>
+<h2>Netdata</h2>
+This application contains netdata, which can be used for monitoring the health of your AR8x platform.
+On this view you can perform a simple request for the Netdata to return the latest CPU usage percent. 
+You can also open the UI of netdata from this view.
+</br></br>
+If you wish to configure the netdata, you need to edit the netdata.conf located in netdata\zipcontents\bin\netdata\etc\netdata.
+<div id="loaderDiv"></br></div>
+<div id="infoDiv"></br></div>
+<script type="text/javascript">
+
+function GetCPUStats()
+{
+	$("#loaderDiv").html("<img src='"+location.host+"/../../../../img/ajax-loader.gif'/>");
+	var fullurl = location.protocol + "//" +location.host+"/app/backend/healthcheck/api/v1/data?chart=system.cpu&format=array&points=1&group=average&options=absolute|jsonwrap|nonzero&after=-1";
+	$.ajax({
+		url: fullurl,
+		type: "GET",
+		cache: false,
+		processData: false, // Don't process the files
+		success: function (data) 
+		{
+			if(data != undefined && data != null)
+			{
+				$("#infoDiv").html("Current CPU usage from netdata: "+data.result[0]+"%");
+			}
+			$("#loaderDiv").html("</br>");
+		},
+		error: function (data) 
+		{
+			$("#loaderDiv").html("</br>");
+			$("#infoDiv").append("Error getting CPU usage from netdata: "+data+"</br>");
+		}
+	});
+}
+
+function OpenUI()
+{
+	var url = location.protocol + "//" +location.host+"/app/backend/healthcheck";
+	var win = window.open(url, '_blank');
+	win.focus();
+}
+
+</script>
+<!-- here we will add charts -->
+<input type="button" class="btn btn-primary" onclick="OpenUI();" value="Open UI"/>
+<input type="button" class="btn btn-primary" onclick="GetCPUStats();" value="Test netdata"/>
+</body>
+</html>

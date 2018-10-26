@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$1" = "start" ]; then
+	# Signal start to your process(es)
+	/mnt/userdata/apps/healthcheck/bin/netdata/usr/sbin/netdata -u healthcheck
+else
+	# Signal stop to your process(es)
+	killall netdata
+	echo "EXIT"
+fi

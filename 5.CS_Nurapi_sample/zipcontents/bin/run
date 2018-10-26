@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$1" = "start" ]; then
+	# Signal start to your process(es)
+	mono ~/nurapisample.exe
+else
+	# Signal stop to your process(es)
+	pkill -u nurapisample
+	echo "EXIT"
+fi

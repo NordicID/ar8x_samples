@@ -1,0 +1,16 @@
+CC = gcc
+RM = rm -f
+
+SRC = ./src/main.c ./src/util.c ./src/setup.c ./src/inventory.c ./src/readercaps.c
+INCLUDE = -I./inc/
+LIBDEF = -L./lib/ -lNurApix64 -lm -lpthread
+BITNESS = -m64
+CFLAGS = -D_PLAT_LINUX64 -DNUR_EXPOSE_WIN32API 
+
+OUTPUT = nurconx64
+
+all:
+	$(CC) $(INCLUDE) $(CFLAGS) $(SRC) $(BITNESS) -o $(OUTPUT) $(LIBDEF)
+
+clean:
+	$(RM) $(OUTPUT)

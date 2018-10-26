@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ "$1" = "start" ]; then
-	# Signal start to your process(es)
-	~/node ~/server.js
-else
-	# Signal stop to your process(es)
-	echo "EXIT"
-fi

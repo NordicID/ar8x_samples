@@ -1,0 +1,19 @@
+F:\Projects\ar8x_samples\6. LLRP sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.csprojResolveAssemblyReference.cache
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\NormaConfig.exe.config
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\NormaConfig.exe
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\NormaConfig.pdb
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\Backend.Utils.dll
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\Newtonsoft.Json.dll
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\Newtonsoft.Json.xml
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.csprojResolveAssemblyReference.cache
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.exe
+F:\Projects\FuckingAbout\6.LLRP_sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.pdb
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\NormaConfig.exe.config
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\NormaConfig.exe
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\NormaConfig.pdb
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\Backend.Utils.dll
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\Newtonsoft.Json.dll
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\bin\Debug\Newtonsoft.Json.xml
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.csprojResolveAssemblyReference.cache
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.exe
+F:\Projects\ar8x_samples\6.LLRP_sample\NormaConfig\NormaConfig\obj\Debug\NormaConfig.pdb

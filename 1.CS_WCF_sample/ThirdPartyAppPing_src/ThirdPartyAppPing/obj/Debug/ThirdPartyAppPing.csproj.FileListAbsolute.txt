@@ -1,0 +1,21 @@
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.exe.config
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.exe
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.pdb
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\Backend.Utils.dll
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.csprojResolveAssemblyReference.cache
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.exe
+F:\Projects\ar8x_samples\appimportsample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.pdb
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.exe.config
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.exe
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.pdb
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\Backend.Utils.dll
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.csprojResolveAssemblyReference.cache
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.exe
+F:\Projects\ar8x_samples\1. C# Webservice sample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.pdb
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.exe.config
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.exe
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\ThirdPartyAppPing.pdb
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\bin\Debug\Backend.Utils.dll
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.csprojResolveAssemblyReference.cache
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.exe
+F:\Projects\ar8x_samples\1.CS_WCF_sample\ThirdPartyAppPing_src\ThirdPartyAppPing\obj\Debug\ThirdPartyAppPing.pdb
