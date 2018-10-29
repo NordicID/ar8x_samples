@@ -1,7 +1,7 @@
-#Raspberry Pi makefile
+#Smart reader makefile
 
 #Probably only 'gcc' can be used if compiling with the board's toolchain.
-CC = ../../../ar8x_raspbian/toolchain/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc
+CC = gcc
 
 #For Windows
 RM = cmd /C del

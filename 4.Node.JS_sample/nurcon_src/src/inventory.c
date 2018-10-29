@@ -123,8 +123,9 @@ int simple_inventory(HANDLE hApi, int *alive)
 		return error;
 	}
 
-	error = NurApiFetchTags(hApi, TRUE, NULL);	
-	if (error != NUR_NO_ERROR)
+	error = NurApiFetchTags(hApi, TRUE, NULL);
+	// check for "error" 0x20 (not tags found)
+	if (error != NUR_NO_ERROR && error != NUR_ERROR_NO_TAG)
 	{
 		// Failed
 		return error;

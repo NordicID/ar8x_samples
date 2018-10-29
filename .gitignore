@@ -1,11 +1,10 @@
-appimportsample/ThirdPartyAppPing_src/.vs/ThirdPartyAppPing/v14/.suo
-appimportsample/ThirdPartyAppPing_src/ThirdPartyAppPing/bin/Debug/Backend.Utils.dll
-appimportsample/ThirdPartyAppPing_src/ThirdPartyAppPing/obj
-appimportsample/ThirdPartyAppPing_src/ThirdPartyAppPing/bin
-javasample/jdk1.8.0_121/
-norma/NormaConfig/.vs/
-norma/NormaConfig/NormaConfig/bin/
-norma/NormaConfig/NormaConfig/obj/
+1.CS_WCF_sample/ThirdPartyAppPing_src/.vs/ThirdPartyAppPing/v14/.suo
+1.CS_WCF_sample/ThirdPartyAppPing_src/ThirdPartyAppPing/bin/Debug/Backend.Utils.dll
+1.CS_WCF_sample/ThirdPartyAppPing_src/ThirdPartyAppPing/obj
+1.CS_WCF_sample/ThirdPartyAppPing_src/ThirdPartyAppPing/bin
+6.LLRP_sample/NormaConfig/.vs/
+6.LLRP_sample/NormaConfig/NormaConfig/bin/
+6.LLRP_sample/NormaConfig/NormaConfig/obj/
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -13,7 +12,7 @@ norma/NormaConfig/NormaConfig/obj/
 
 # Package Files #
 *.jar
-!*/lib/*.jar
+!2.Java_MQTT_sample/zipcontents/lib/*
 *.war
 *.ear
 package
