@@ -23,7 +23,7 @@ use the `make` script to compile any necessary binaries and package the applicat
 
 Find all the NordicID smart readers documentation [here](docs), documents in that folder go through different aspects of the smart readers
 
-### [AN001_AR8x_Getting started](docs/AN001_AR8x_Getting started)
+### [AN001_AR8x_Getting started](docs/AN001_AR8x_Getting_started.docx)
 
 Your first glance over the smart reader dashboard, details on each view what it can do and what to expect. This is bound to change as the development is ongoing new features will be added or changed along the way.
 
