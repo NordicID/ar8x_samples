@@ -5,6 +5,9 @@ The `NormaConfig` project depends on the Newtonsoft json library to build, resto
 
 # Changelog
 
+### v1.0.9
+- Updated Nurlibrary to latest 
+
 ### v1.0.8
 - Call the backend with correct protocol https/http
 
