@@ -1,6 +1,6 @@
 # ar8x_samples
 
-This repository contains the samples and demo applications for NordicID's smart readers. Each sample contains the necessary scripts to build it and package it for installation and a pre-packaged signed zip ready to install on your device.
+This repository contains the samples and demo applications for NordicID's smart readers like Sampo S2, AR62, AR82 and AR85. Each sample contains the necessary scripts to build it and package it for installation and a pre-packaged signed zip ready to install on your device.
 Should you ever need to modify a sample to test or make things work your way, you can find the necessary files for the application package in `zipcontents` more details about the contents of that folder in the [documentation](docs/AN002_AR8x_appinterface.docx). in case the application has binaries that need to be compiled you can find the source code in a `src` folder e.g **nurapisample_src**. each of these will contain scripts or make files to build the binaries.
 
 use the `make` script to compile any necessary binaries and package the application files, this will generate a signed zip file in the sample folder.
