@@ -11,9 +11,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 !2.Java_MQTT_sample/zipcontents/lib/*
-*.war
 *.ear
 package
 
