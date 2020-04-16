@@ -201,7 +201,7 @@ namespace NormaConfig
 
         [OperationContract,
           WebInvoke(Method = WebRequestMethods.Http.Post,
-          UriTemplate = "/GetDeviceSetup",
+          UriTemplate = "/GetDeviceStatus",
           RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)
          ]
         NormaStatus GetDeviceStatus(string deviceId);

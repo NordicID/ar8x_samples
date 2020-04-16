@@ -176,7 +176,7 @@ namespace NormaConfig
             NormaStatus stat = GetDeviceStatusAll();
             if (stat != null && stat.Instances != null && stat.Instances.ReaderStatus != null && stat.Instances.ReaderStatus.Count > 0)
             {
-                for (int i = stat.Instances.ReaderStatus.Count; i >= 0; i--)
+                for (int i = stat.Instances.ReaderStatus.Count - 1; i >= 0; i--)
                 {
                     if (stat.Instances.ReaderStatus[i].InstanceName != deviceId)
                     {
