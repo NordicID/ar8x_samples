@@ -1,14 +1,19 @@
 #!/bin/sh
 
 if [ "$1" = "start" ]; then
+
 	# Signal start to your process(es)
 	echo "Starting NormaConfig"
 	mono ~/NormaConfig.exe &
 	echo "Starting Norma"
-	~/Norma
+	# Start norma with Config.json as configuration and stdout as log out
+	# To log flash (for debugging) change stdout to e.g. Norma.log
+	~/Norma Config.json stdout
+
 else
 
 	# Signal stop to your process(es)
 	pkill -u norma
 	echo "EXIT"
+
 fi
