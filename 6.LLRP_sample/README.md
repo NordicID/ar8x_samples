@@ -5,6 +5,10 @@ The `NormaConfig` project depends on the Newtonsoft json library to build, resto
 
 # Changelog
 
+### v1.1.0
+- Write logs to stdout instead of flash
+- Update nurapi library
+
 ### v1.0.9
 - Updated Nurlibrary to latest 
 
