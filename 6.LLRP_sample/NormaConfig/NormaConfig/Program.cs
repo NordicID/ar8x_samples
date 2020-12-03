@@ -107,18 +107,18 @@ namespace NormaConfig
         public string GetLog()
         {
             string ret = "";
-            string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            if (!File.Exists(path + "/Norma.log"))
+            string logFilePath = "/var/log/apps/norma/norma.log";
+            if (!File.Exists(logFilePath))
             {
                 Console.WriteLine("Log file does not exist");
-                return "Log file " + path + "/Norma.log does not exist";
+                return "Log file " + logFilePath + " does not exist";
             }
 
             FileStream fs = null;
             StreamReader rd = null;
             try
             {
-                fs = File.OpenRead(path + "/Norma.log");
+                fs = File.OpenRead(logFilePath);
                 rd = new StreamReader(fs, Encoding.UTF8);
                 ret = rd.ReadToEnd();
             }
