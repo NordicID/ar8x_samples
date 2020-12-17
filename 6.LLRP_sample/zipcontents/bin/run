@@ -4,16 +4,32 @@ if [ "$1" = "start" ]; then
 
 	# Signal start to your process(es)
 	echo "Starting NormaConfig"
-	mono ~/NormaConfig.exe &
-	echo "Starting Norma"
-	# Start norma with Config.json as configuration and stdout as log out
-	# To log flash (for debugging) change stdout to e.g. Norma.log
-	~/Norma Config.json stdout
+	mono ~/NormaConfig.exe &	
+	
+	chmod +x ~/Norma
+	
+	rm -f ~/stop
+	while [ ! -f ~/stop ]
+	do
+		# Start norma with Config.json as configuration and stdout as log out
+		# To log flash (for debugging) change stdout to e.g. Norma.log
+		echo "Starting Norma"
+		~/Norma Config.json stdout
+		
+		if [ ! -f ~/stop ]; then
+			echo "Restarting app in 1 sec"
+			sleep 1
+		fi
+	done
+
+	echo "EXIT RECEIVED"
+	rm -f ~/stop
 
 else
 
 	# Signal stop to your process(es)
-	pkill -u norma
-	echo "EXIT"
+	echo "SIGNAL EXIT"
+	touch ~/stop
+	pkill -e -f Norma
 
 fi

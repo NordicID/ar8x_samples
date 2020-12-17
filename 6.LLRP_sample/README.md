@@ -5,6 +5,10 @@ The `NormaConfig` project depends on the Newtonsoft json library to build, resto
 
 # Changelog
 
+### v1.1.1
+- Fix SET_READER_CONFIG for antenna IDs over 15
+- Restart norma in case of abnormal termination
+
 ### v1.1.0
 - Write logs to stdout instead of flash
 - Update nurapi library
